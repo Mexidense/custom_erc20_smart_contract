@@ -91,4 +91,16 @@ contract('CustomERC20', accounts => {
         let newAllowanceForAccount5AfterDecreasing = await instance.allowance(accounts[0], accounts[5]);
         assert.equal(newAllowanceForAccount5AfterDecreasing, 250);
     });
+
+    it('should destroy tokens for an account', async () => {
+        await instance.createTokens();
+
+        let initialTokensOffer = await instance.balanceOf.call(accounts[0]);
+        assert.equal(initialTokensOffer, 1000);
+
+        await instance.destroyTokens(accounts[0], 100);
+
+        let initialAfterDestroying = await instance.balanceOf.call(accounts[0]);
+        assert.equal(initialAfterDestroying, 900);
+    });
 });
