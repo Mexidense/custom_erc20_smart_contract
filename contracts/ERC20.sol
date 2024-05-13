@@ -206,12 +206,12 @@ contract ERC20 is IERC20 {
         address spender,
         uint256 amount
     ) internal virtual {
-        uint256 currentAllowance = allowance(owner, spender);
-        if (currentAllowance != type(uint256).max) {
-            require(currentAllowance >= amount, "[ERC] insufficient allowance");
+        uint256 currentAllowance = _allowances[owner][spender];
+        require(currentAllowance >= amount, "[ERC20] Transfer amount exceeds allowance");
 
+        if (currentAllowance != type(uint256).max) {
             unchecked {
-                _approve(owner, spender, amount);
+                _approve(owner, spender, currentAllowance - amount);
             }
         }
     }

@@ -66,8 +66,9 @@ contract('CustomERC20', accounts => {
         assert.equal(address1BalanceWithAllowance, 0);
 
         await instance.transferFrom(accounts[0], accounts[2], 100, { from: accounts[1] });
-        let allowanceAfterTranfer = await instance.allowance(accounts[0], accounts[1]);
-        assert.equal(allowanceAfterTranfer, 0);
+
+        let allowanceAfterTranfering = await instance.allowance(accounts[0], accounts[1]);
+        assert.equal(allowanceAfterTranfering, 0);
 
         let address2BalanceAfterTransferingFrom = await instance.balanceOf.call(accounts[2]);
         assert.equal(address2BalanceAfterTransferingFrom, 100);
